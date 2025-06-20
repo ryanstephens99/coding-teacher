@@ -1,0 +1,102 @@
+### CodeMentor AI Companion API Tests
+### Make sure the companion app is running on port 8000
+
+### Health Check
+GET http://127.0.0.1:8000/health
+
+###
+
+### Root Endpoint
+GET http://127.0.0.1:8000/
+
+###
+
+### Get Supported Languages
+GET http://127.0.0.1:8000/api/analysis/supported-languages
+
+###
+
+### Analyze TypeScript Code
+POST http://127.0.0.1:8000/api/analysis/analyze
+Content-Type: application/json
+
+{
+  "language": "typescript",
+  "code": "const userName = 'john'; var count = 0; function getUserName() { return userName; }",
+  "fileName": "test.ts",
+  "framework": "react"
+}
+
+###
+
+### Analyze Python Code
+POST http://127.0.0.1:8000/api/analysis/analyze
+Content-Type: application/json
+
+{
+  "language": "python",
+  "code": "def get_user_name():\n    user_name = 'john'\n    return user_name",
+  "fileName": "test.py"
+}
+
+###
+
+### Ask LLM Question
+POST http://127.0.0.1:8000/api/llm/ask
+Content-Type: application/json
+
+{
+  "question": "Why should I use camelCase instead of snake_case in TypeScript?",
+  "context": {
+    "language": "typescript",
+    "code": "const user_name = 'john';"
+  }
+}
+
+###
+
+### Ask LLM Question (No Context)
+POST http://127.0.0.1:8000/api/llm/ask
+Content-Type: application/json
+
+{
+  "question": "What are the benefits of consistent naming conventions?"
+}
+
+###
+
+### Get Language Rules
+GET http://127.0.0.1:8000/api/analysis/rules/typescript
+
+###
+
+### Get Language Rules (Python)
+GET http://127.0.0.1:8000/api/analysis/rules/python
+
+###
+
+### Test Invalid Language
+GET http://127.0.0.1:8000/api/analysis/rules/invalid-language
+
+###
+
+### Test Invalid Analysis Request (Missing Code)
+POST http://127.0.0.1:8000/api/analysis/analyze
+Content-Type: application/json
+
+{
+  "language": "typescript",
+  "fileName": "test.ts"
+}
+
+###
+
+### Test Invalid LLM Request (Missing Question)
+POST http://127.0.0.1:8000/api/llm/ask
+Content-Type: application/json
+
+{
+  "context": {
+    "language": "typescript"
+  }
+} 
